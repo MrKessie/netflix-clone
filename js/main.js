@@ -26,22 +26,28 @@ function onLeave(){
 
 function loadData(){
     const div = document.createElement("div");
-    const lbl = document.createElement("label");
+    // const lbl = document.createElement("label");
     const lbl2 = document.createElement("label");
     const p = document.createElement("p");
     const p2 = document.createElement("p");
+    // const img1 = document.createElement("img");
 
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
+    fetch('https://jsonplaceholder.typicode.com/photos/')
     .then(response => response.json())
       .then((json) => {
-        p.innerText= json["title"];
-        lbl.innerText = "Title of work";
-        lbl2.innerText = json["completed"];
-        p2.innerText = "Completed of work"
-        div.appendChild(lbl);
-        div.appendChild(p);
-        div.appendChild(p2);
-        div.appendChild(lbl2)
+        for(let i = 0; i < 3; i++){
+            let img1 = document.createElement("img");
+            img1.src = json[i]["url"];
+            img1.style.width = "200px";
+
+            //style image
+            // img1.className = "shadow rounded border p-3 m-3";
+            // img1.addEventListener("mouseover, onHover");
+
+            div.appendChild(img1);
+        }
+
+        //console.log(json)
         section.appendChild(div);
         
         
