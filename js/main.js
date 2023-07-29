@@ -49,14 +49,55 @@ function loadData(){
 
         //console.log(json)
         section.appendChild(div);
-        
-        
-
-
-        
+            
       })
 }
-loadData();
+
+function discoverMovies(){
+    const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjY0ZWZhYWFhZTNjYTVjOWI2ODhkYWQ4YzVmMmU4YiIsInN1YiI6IjYxNTI3M2E5ZDFjYTJhMDA0MjYxNGM2NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XIg3w2HDHuUf6JBdCpUolGFOnsjYZltVN3hMeYrBppU'
+        }
+      };
+      
+      fetch('https://api.themoviedb.org/3/discover/movie', options)
+        .then(response => response.json())
+        .then(response => {
+
+            const results = response["results"];
+            for (let i = 0; i < 30; i++) {
+                const div = document.createElement("div");
+                const h4 = document.createElement("h4");
+                const img = document.createElement("img");
+                const desc = document.createElement("p");
+                const yearText = document.createElement("p");
+                h4.innerText = results[i]["title"];
+                //img.src = "https://api.themoviedb.org/3/discover/movie" + results[i]["poster_path"];
+                img.src = "https://image.tmdb.org/t/p/w500" + results[i]["poster_path"];
+                desc.innerText = results[i]["overview"];
+                yearText.innerText = results[i]["release_date"];
+
+                div.appendChild(img);
+                div.appendChild(h4);
+                div.appendChild(desc);
+                div.appendChild(yearText);
+                div.className = "card shadow border m-4 p-4 w-25";
+                section.className = "d-flex flex-wrap justify-content-center"
+                section.appendChild(div);
+
+                //const element = array[i];
+                
+            }
+            console.log(response["results"])
+        }
+            )
+        .catch(err => console.error(err));
+}
+
+//loadData();
+discoverMovies();
 
 btn.addEventListener("click", printValue);
 img.addEventListener("mouseover", onHover);
